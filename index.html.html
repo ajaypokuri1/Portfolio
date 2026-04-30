@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ajay Pokuri – Performance Marketing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f9f7f4;
+      --surface: #ffffff;
+      --ink: #1a1814;
+      --muted: #6b6560;
+      --accent: #c2410c;
+      --accent-light: #fff1ec;
+      --border: #e8e3dd;
+      --radius: 10px;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(249,247,244,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column; gap: 5px; cursor: pointer;
+      background: none; border: none; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--ink); border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 60px; left: 0; right: 0; z-index: 99;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem 1.5rem;
+      flex-direction: column; gap: 1rem;
+    }
+    .mobile-menu a {
+      text-decoration: none; color: var(--ink);
+      font-size: 1rem; font-weight: 500;
+      padding: 0.4rem 0; border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu.open { display: flex; }
+
+    /* ── SECTIONS ── */
+    section { padding: 90px 2rem 70px; max-width: 860px; margin: 0 auto; }
+    section:first-of-type { padding-top: 120px; }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.7rem, 4vw, 2.4rem);
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+    }
+    h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    p { color: var(--muted); margin-bottom: 1rem; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── HOME ── */
+    #home { padding-top: 130px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+    .home-tagline {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      border-radius: 20px;
+      margin-bottom: 1.4rem;
+    }
+    .home-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 580px;
+      margin-bottom: 2rem;
+    }
+    .home-stats {
+      display: flex; gap: 2rem;
+      margin-bottom: 2.4rem;
+      flex-wrap: wrap;
+    }
+    .stat-item {}
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.8rem;
+      color: var(--ink);
+      display: block;
+    }
+    .stat-desc { font-size: 0.82rem; color: var(--muted); }
+
+    .cta-buttons {
+      display: flex; gap: 0.9rem; flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.7rem 1.4rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem; font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--ink); color: #fff;
+    }
+    .btn-primary:hover { background: var(--accent); }
+    .btn-outline {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--ink);
+    }
+    .btn-outline:hover { border-color: var(--ink); background: var(--surface); }
+
+    /* ── DIVIDER ── */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0 2rem; }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      margin-top: 1rem;
+    }
+    .about-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.6rem;
+    }
+    .about-card-label {
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.5rem;
+    }
+    .about-card p { font-size: 0.92rem; }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .skill-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .skill-icon { font-size: 1.4rem; margin-bottom: 0.6rem; }
+    .skill-name { font-weight: 600; font-size: 0.92rem; color: var(--ink); margin-bottom: 0.2rem; }
+    .skill-sub { font-size: 0.8rem; color: var(--muted); }
+
+    /* ── EXPERIENCE ── */
+    .timeline { margin-top: 1rem; display: flex; flex-direction: column; gap: 1.4rem; }
+    .timeline-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.6rem;
+      position: relative;
+    }
+    .timeline-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.8rem; }
+    .timeline-role { font-weight: 600; font-size: 1rem; color: var(--ink); }
+    .timeline-company { font-size: 0.88rem; color: var(--accent); font-weight: 500; margin-top: 0.1rem; }
+    .timeline-period {
+      font-size: 0.78rem; color: var(--muted);
+      background: var(--bg); border: 1px solid var(--border);
+      padding: 0.2rem 0.7rem; border-radius: 20px;
+      white-space: nowrap;
+    }
+    .timeline-list { list-style: none; padding: 0; }
+    .timeline-list li {
+      font-size: 0.88rem; color: var(--muted);
+      padding: 0.25rem 0 0.25rem 1.2rem;
+      position: relative;
+    }
+    .timeline-list li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--accent); font-size: 0.8rem;
+    }
+
+    /* ── EDUCATION ── */
+    .edu-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.6rem;
+      margin-top: 1rem;
+      display: flex; gap: 1.2rem; align-items: flex-start;
+    }
+    .edu-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: var(--accent-light);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+    .edu-degree { font-weight: 600; font-size: 0.95rem; color: var(--ink); }
+    .edu-school { font-size: 0.88rem; color: var(--accent); font-weight: 500; margin-top: 0.1rem; }
+    .edu-year { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.6rem;
+      display: flex; flex-direction: column; gap: 0.8rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .project-type {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--accent);
+    }
+    .project-title { font-weight: 700; font-size: 1rem; color: var(--ink); }
+    .project-desc { font-size: 0.86rem; color: var(--muted); flex: 1; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      font-size: 0.73rem; padding: 0.2rem 0.6rem;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 20px; color: var(--muted);
+    }
+    .btn-download {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--ink); color: #fff;
+      border: none; border-radius: var(--radius);
+      padding: 0.6rem 1rem; font-size: 0.84rem;
+      font-weight: 500; text-decoration: none; cursor: pointer;
+      transition: background 0.2s; font-family: inherit;
+      width: fit-content;
+    }
+    .btn-download:hover { background: var(--accent); }
+
+    /* ── CONTACT ── */
+    .contact-wrapper {
+      display: grid; grid-template-columns: 1fr 1.4fr;
+      gap: 2.5rem; margin-top: 1rem;
+      align-items: start;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 0.8rem;
+      text-decoration: none; color: var(--ink);
+      font-size: 0.92rem;
+      padding: 0.9rem 1.1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.2s;
+    }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+    .contact-link-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .contact-link-text { font-size: 0.82rem; color: var(--muted); }
+
+    .contact-form { display: flex; flex-direction: column; gap: 0.9rem; }
+    .form-field { display: flex; flex-direction: column; gap: 0.3rem; }
+    label { font-size: 0.82rem; font-weight: 500; color: var(--ink); }
+    input, textarea {
+      padding: 0.7rem 0.9rem;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      font-family: inherit; font-size: 0.9rem; color: var(--ink);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    input:focus, textarea:focus { border-color: var(--accent); }
+    textarea { resize: vertical; min-height: 110px; }
+    .btn-submit {
+      background: var(--ink); color: #fff;
+      border: none; border-radius: var(--radius);
+      padding: 0.75rem 1.4rem;
+      font-family: inherit; font-size: 0.9rem; font-weight: 500;
+      cursor: pointer; transition: background 0.2s;
+      align-self: flex-start;
+    }
+    .btn-submit:hover { background: var(--accent); }
+    .form-success {
+      display: none;
+      background: #f0fdf4; border: 1px solid #86efac;
+      color: #166534; padding: 0.8rem 1rem;
+      border-radius: var(--radius); font-size: 0.88rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2rem;
+      font-size: 0.8rem; color: var(--muted);
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    /* ── FADE ANIMATION ── */
+    .fade-in {
+      opacity: 0; transform: translateY(18px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 0 1.2rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 80px 1.2rem 60px; }
+      #home { padding-top: 100px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-wrapper { grid-template-columns: 1fr; }
+      .home-stats { gap: 1.4rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">Ajay Pokuri</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#skills" onclick="closeMobile()">Skills</a>
+  <a href="#experience" onclick="closeMobile()">Experience</a>
+  <a href="#education" onclick="closeMobile()">Education</a>
+  <a href="#projects" onclick="closeMobile()">Projects</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- HOME -->
+<section id="home">
+  <div class="home-tagline fade-in">Performance Marketing Executive</div>
+  <h1 class="fade-in">Hi, I'm Ajay Pokuri.</h1>
+  <p class="home-sub fade-in">
+    I run paid ad campaigns on Meta and Google that actually deliver results. Over the last 1.5 years, I've managed campaigns across Education, Real Estate, Medical, and various other niches focused on leads, ROI, and making every rupee count.
+  </p>
+  <div class="home-stats fade-in">
+    <div class="stat-item">
+      <span class="stat-num">₹10L+</span>
+      <span class="stat-desc">Ad budget managed</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">1.5+ yrs</span>
+      <span class="stat-desc">Paid media experience</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">20+</span>
+      <span class="stat-desc">Client accounts handled</span>
+    </div>
+  </div>
+  <div class="cta-buttons fade-in">
+    <a href="tel:+917981528856" class="btn btn-primary">📞 Call Me</a>
+    <a href="mailto:ajaypokuri1@gmail.com" class="btn btn-outline">✉️ Email</a>
+    <a href="https://www.linkedin.com/in/ajay-pokuri-537ab0335" target="_blank" rel="noopener" class="btn btn-outline">🔗 LinkedIn</a>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">About me</p>
+  <h2 class="fade-in">A bit about who I am</h2>
+  <p class="fade-in" style="max-width:620px; margin-bottom:2rem;">
+    I got into digital marketing because I liked seeing measurable outcomes. Campaigns that either work or don't, there's no uncertainty. Over time I've gotten good at figuring out why they work, modifying them, and keeping costs in check while hitting business goals.
+  </p>
+  <div class="about-grid">
+    <div class="about-card fade-in">
+      <div class="about-card-label">What I do</div>
+      <p>I plan and run paid campaigns on Meta Ads and Google Ads. That includes everything from audience research and budget allocation to A/B testing creatives and reading performance data to make better decisions.</p>
+    </div>
+    <div class="about-card fade-in">
+      <div class="about-card-label">Where I'm headed</div>
+      <p>I'm currently building my knowledge in programmatic advertising learning how DSPs, RTB, and platforms like DV360 and The Trade Desk work. My goal is to move into a Programmatic Media Buyer role over time.</p>
+    </div>
+    <div class="about-card fade-in">
+      <div class="about-card-label">How I work</div>
+      <p>I keep things data-driven. I use Google Analytics, Meta Pixel, and GTM regularly. I work closely with creative and landing page teams to make sure every part of a campaign is lined up for better conversions.</p>
+    </div>
+    <div class="about-card fade-in">
+      <div class="about-card-label">What I care about</div>
+      <p>Clear results, honest reporting, and campaigns that improve over time. I believe good marketing comes from understanding the audience and testing consistently not just launching and hoping for the best.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">Skills</p>
+  <h2 class="fade-in">What I work with</h2>
+  <div class="skills-grid">
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🎯</div>
+      <div class="skill-name">Meta Ads</div>
+      <div class="skill-sub">Campaign setup, optimization, pixel tracking</div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🔍</div>
+      <div class="skill-name">Google Ads</div>
+      <div class="skill-sub">Search, Display, lead gen campaigns</div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">📊</div>
+      <div class="skill-name">Analytics & Reporting</div>
+      <div class="skill-sub">GA4, Meta Insights, performance dashboards</div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">🏷️</div>
+      <div class="skill-name">Google Tag Manager</div>
+      <div class="skill-sub">Event tracking, conversion setup</div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">👥</div>
+      <div class="skill-name">Audience Targeting</div>
+      <div class="skill-sub">Segmentation, lookalikes, retargeting</div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">📋</div>
+      <div class="skill-name">Media Planning</div>
+      <div class="skill-sub">Budget allocation, campaign strategy</div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">💼</div>
+      <div class="skill-name">LinkedIn Ads</div>
+      <div class="skill-sub">B2B targeting and lead campaigns</div>
+    </div>
+    <div class="skill-card fade-in">
+      <div class="skill-icon">📡</div>
+      <div class="skill-name">Programmatic (Learning)</div>
+      <div class="skill-sub">DV360, The Trade Desk, RTB basics</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label">Experience</p>
+  <h2 class="fade-in">Where I've worked</h2>
+  <div class="timeline">
+
+    <div class="timeline-item fade-in">
+      <div class="timeline-header">
+        <div>
+          <div class="timeline-role">Digital Marketing Executive</div>
+          <div class="timeline-company">Bristle Tech</div>
+        </div>
+        <div class="timeline-period">Aug 2025 – Apr 2026</div>
+      </div>
+      <ul class="timeline-list">
+        <li>Managed multiple client accounts across education, real estate, and events sectors</li>
+        <li>Led campaign planning, budget allocation, and audience targeting decisions</li>
+        <li>Improved CTR and reduced CPC through regular A/B testing and creative iteration</li>
+        <li>Worked with creative teams to align ad visuals with campaign goals</li>
+        <li>Tracked conversions and leads using Meta Pixel, GA4, and GTM</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="timeline-header">
+        <div>
+          <div class="timeline-role">Digital Marketing Associate</div>
+          <div class="timeline-company">Bristle Tech</div>
+        </div>
+        <div class="timeline-period">May 2025 – Jul 2025</div>
+      </div>
+      <ul class="timeline-list">
+        <li>Supported campaign operations across Meta Ads accounts</li>
+        <li>Assisted in performance reporting and weekly analysis</li>
+        <li>Coordinated with landing page teams to improve conversion quality</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="timeline-header">
+        <div>
+          <div class="timeline-role">Junior Digital Marketing Associate</div>
+          <div class="timeline-company">Optionb</div>
+        </div>
+        <div class="timeline-period">Jan 2025 – May 2025</div>
+      </div>
+      <ul class="timeline-list">
+        <li>Handled day-to-day campaign management for assigned clients</li>
+        <li>Monitored ad spend and flagged underperforming ad sets</li>
+        <li>Built basic reporting dashboards for campaign tracking</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="timeline-header">
+        <div>
+          <div class="timeline-role">Digital Marketing Intern</div>
+          <div class="timeline-company">Digital Solution Tech</div>
+        </div>
+        <div class="timeline-period">Nov 2024 – Feb 2025</div>
+      </div>
+      <ul class="timeline-list">
+        <li>Assisted in setting up and monitoring paid campaigns</li>
+        <li>Learned campaign structure, bidding strategies, and creative best practices</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item fade-in">
+      <div class="timeline-header">
+        <div>
+          <div class="timeline-role">Digital Marketing Intern</div>
+          <div class="timeline-company">AI Variant</div>
+        </div>
+        <div class="timeline-period">Oct 2024 – Jan 2025</div>
+      </div>
+      <ul class="timeline-list">
+        <li>Supported the team in managing ad accounts and generating performance reports</li>
+        <li>Got hands-on exposure to Meta Ads Manager and Google Ads interface</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- EDUCATION -->
+<section id="education">
+  <p class="section-label">Education</p>
+  <h2 class="fade-in">Academic background</h2>
+  <div class="edu-card fade-in">
+    <div class="edu-icon">🎓</div>
+    <div>
+      <div class="edu-degree">Bachelor of Business Administration (BBA) – Finance</div>
+      <div class="edu-school">Ramaiah Institute of Business Studies</div>
+      <div class="edu-year">Oct 2020 – Aug 2023</div>
+    </div>
+  </div>
+  <div class="edu-card fade-in" style="margin-top:1rem;">
+    <div class="edu-icon">📜</div>
+    <div>
+      <div class="edu-degree">Digital Marketing Certification</div>
+      <div class="edu-school">ExcleR</div>
+      <div class="edu-year">Completed</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">Projects</p>
+  <h2 class="fade-in">Ad Manager Dashboards</h2>
+  <p class="fade-in" style="margin-bottom:1.5rem; max-width:560px;">
+    These are real Meta Ads campaign dashboards from client accounts I've managed. Each one shows campaign structure, spend, results, and key metrics. You can download the full PDF for each.
+  </p>
+  <div class="projects-grid">
+
+    <div class="project-card fade-in">
+      <div class="project-type">Real Estate</div>
+      <div class="project-title">NCD Royal Pavilion</div>
+      <p class="project-desc">
+        Lead generation campaigns for a real estate client with 20+ active campaigns. Focused on driving quality property enquiries through Lead Form and Lookalike audiences. Managed ₹6.7L+ in spend with a focus on reducing cost per lead.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Real Estate</span>
+        <span class="tag">Brand Awareness</span>
+        <span class="tag">Lead Generation</span>
+      </div>
+      <a href="NCD_Dashboard.pdf" download class="btn-download">⬇ Download Dashboard</a>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-type">Education</div>
+      <div class="project-title">Vignan University</div>
+      <p class="project-desc">
+        Managed 34 campaigns driving student admissions across MBA, MCA, and Online degree programs. Mix of lead form, messaging, and engagement campaigns targeting students across Andhra Pradesh and Telangana.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Education</span>
+        <span class="tag">Brand Awareness</span>
+        <span class="tag">Lead Generation</span>
+      </div>
+      <a href="Vignan_University_Dashboard.pdf" download class="btn-download">⬇ Download Dashboard</a>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-type">Education</div>
+      <div class="project-title">Andhra University</div>
+      <p class="project-desc">
+        Ran 8 campaigns for Andhra University covering awareness, engagement, and lead generation for various Online programs. Total reach of 4.4M+ across campaigns with a focus on keeping CPM low and quality of enquiries high.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Education</span>
+        <span class="tag">Engagement</span>
+        <span class="tag">Lead Generation</span>
+      </div>
+      <a href="Andhra_University_Dashboard.pdf" download class="btn-download">⬇ Download Dashboard</a>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-type">Events Management</div>
+      <div class="project-title">M&H Events</div>
+      <p class="project-desc">
+        Ran awareness and lead campaigns for an event organiser, including messaging conversion and ad recall campaigns. Worked across 5 campaigns focusing on reach, frequency control, and driving event inquiries at low CPM.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Events</span>
+        <span class="tag">Content Creation</span>
+        <span class="tag">Lead Generation</span>
+      </div>
+      <a href="MH_Events_Dashboard.pdf" download class="btn-download">⬇ Download Dashboard</a>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">Contact</p>
+  <h2 class="fade-in">Let's connect</h2>
+  <p class="fade-in" style="margin-bottom:1.8rem; max-width:480px;">
+    Whether you want to discuss a campaign, explore working together, or just ask a question feel free to reach out.
+  </p>
+  <div class="contact-wrapper">
+    <div class="contact-info fade-in">
+      <a href="mailto:ajaypokuri1@gmail.com" class="contact-link">
+        <span class="contact-link-icon">✉️</span>
+        <div>
+          <div>ajaypokuri1@gmail.com</div>
+          <div class="contact-link-text">Send an email</div>
+        </div>
+      </a>
+      <a href="tel:+917981528856" class="contact-link">
+        <span class="contact-link-icon">📞</span>
+        <div>
+          <div>+91 79815 28856</div>
+          <div class="contact-link-text">Call directly</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/ajay-pokuri-537ab0335" target="_blank" rel="noopener" class="contact-link">
+        <span class="contact-link-icon">🔗</span>
+        <div>
+          <div>LinkedIn Profile</div>
+          <div class="contact-link-text">Ajay Pokuri</div>
+        </div>
+      </a>
+    </div>
+
+    <form class="contact-form fade-in" id="contactForm">
+      <div class="form-field">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="Ravi Kumar" required />
+      </div>
+      <div class="form-field">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="ravi@example.com" required />
+      </div>
+      <div class="form-field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Hi Ajay, I wanted to reach out about..." required></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Send Message →</button>
+      <div class="form-success" id="formSuccess">
+        Thanks for reaching out! Ajay will get back to you soon.
+      </div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Ajay Pokuri. Hyderabad, India.</p>
+</footer>
+
+<script>
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  function closeMobile() { mobileMenu.classList.remove('open'); }
+
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Contact form — mailto fallback
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    const subject = encodeURIComponent('Portfolio Enquiry from ' + name);
+    const body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message);
+    window.location.href = 'mailto:ajaypokuri1@gmail.com?subject=' + subject + '&body=' + body;
+    document.getElementById('formSuccess').style.display = 'block';
+    this.reset();
+  });
+</script>
+</body>
+</html>
